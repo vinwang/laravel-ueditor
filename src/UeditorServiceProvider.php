@@ -6,29 +6,37 @@ use Illuminate\Support\ServiceProvider;
 class UeditorServiceProvider extends ServiceProvider{
 	
 	/**
+     * æŒ‡å®šæ˜¯å¦å»¶ç¼“æä¾›è€…åŠ è½½ã€‚
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
+	/**
      * Bootstrap the application events.
      * @return void
      */
     public function boot(){
 		$viewPath = realpath(__DIR__ . '/../resources/views');
 		$this->loadViewsFrom($viewPath, 'ueditor');
-		//ÊÓÍ¼·¢²¼
+		//è§†å›¾
 		$this->publishes([
-			$viewPath => base_path('resources/views/vendor/ueditor');
+			$viewPath => base_path('resources/views/vendor/ueditor')
 		]);
-		//¹«¹²×ÊÔ´
+		//å…¬å…±èµ„æº
 		$this->publishes([
-			realpath(__DIR__ . '/../resources/public/') => public_path('ueditor');
+			realpath(__DIR__ . '/../resources/public/') => public_path('ueditor')
 		], 'public');
 		
+		\View::share('ueditorUrl', url('laravel-ueditor'));
 		$router = app('router');
 		//auth
 		$config = config('ueditor.core.route', []);
 		$config['namespace'] =  __NAMESPACE__;
-		
-		//Â·ÓÉ
+		// dd($config);
+		//è·¯ç”±
 		$router->group($config, function($router){
-			$router->any('ueditor', 'UeditorController@index');
+			$router->any('laravel-ueditor', 'UeditorController@index');
 		});
 		
 	}
@@ -37,11 +45,20 @@ class UeditorServiceProvider extends ServiceProvider{
      * @return void
      */
 	public function register(){
-		//ÅäÖÃÎÄ¼ş
+		//é…ç½®
 		$configPath = realpath(__DIR__. '/../config/ueditor.php');
 		$this->mergeConfigFrom($configPath, 'ueditor');
 		$this->publishes([
-			$configPath => config_path('ueditor.php');
+			$configPath => config_path('ueditor.php')
 		]);
 	}
+
+	/**
+     * å–å¾—æä¾›è€…æ‰€æä¾›çš„æœåŠ¡ã€‚
+     *
+     * @return array
+     */
+    public function provides(){
+        //
+    }
 }

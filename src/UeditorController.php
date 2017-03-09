@@ -3,13 +3,11 @@
 namespace Wanglu\Ueditor;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Wanglu\Ueditor\Uploader;
 
 class UeditorController extends Controller
 {
-
     /**
      * 编辑器配置
      */
@@ -109,7 +107,8 @@ class UeditorController extends Controller
         }
 
         $up = new Uploader($fieldName, $config, $base64);
-        dd($up->getFileInfo());
+
+        return $up->getFileInfo();
     }
 
 }
