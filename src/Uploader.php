@@ -213,9 +213,14 @@ class Uploader
         //打开输出缓冲区并获取远程图片
         ob_start();
         $context = stream_context_create(
-            array('http' => array(
-                'follow_location' => false // don't follow redirects
-            ))
+            array(
+                'http' => array(
+                    'follow_location' => false // don't follow redirects
+                ),
+                'ssl' => [
+                    'verify_peer' => false,
+                ]
+            )
         );
         readfile($imgUrl, false, $context);
         $img = ob_get_contents();
