@@ -1,10 +1,10 @@
 {
     "name": "wanglu/ueditor",
-    "description": "ueditor for laravel5",
+    "description": "ueditor for laravel",
     "authors": [
         {
             "name": "wanglu",
-            "email": "525824675@qq.com"
+            "email": "wlhome90@gmail.com"
         }
     ],
     "license": "MIT",

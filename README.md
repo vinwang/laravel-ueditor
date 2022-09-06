@@ -1,5 +1,5 @@
-# laravel5-ueditor
-laravel5-ueditor
+# laravel-ueditor
+laravel-ueditor
 
 # config/app.php add Provider
 
