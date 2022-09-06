@@ -7339,7 +7339,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         setContent: function (html, isAppendTo, notFireSelectionchange) {
             var me = this;
 
-            me.fireEvent('beforesetcontent', html);
+            // me.fireEvent('beforesetcontent', html);
             // var root = UE.htmlparser(html);
             // me.filterInputRule(root);
             // html = root.toHtml();
@@ -9387,7 +9387,7 @@ var htmlparser = UE.htmlparser = function (htmlstr,ignoreBlank) {
     //ie下取得的html可能会有\n存在，要去掉，在处理replace(/[\t\r\n]*/g,'');代码高量的\n不能去除
     var allowEmptyTags = {
         b:1,code:1,i:1,u:1,strike:1,s:1,tt:1,strong:1,q:1,samp:1,em:1,span:1,
-        sub:1,img:1,sup:1,font:1,big:1,small:1,iframe:1,a:1,br:1,pre:1
+        sub:1,img:1,sup:1,font:1,big:1,small:1,iframe:1,a:1,br:1,pre:1,video:1
     };
     htmlstr = htmlstr.replace(new RegExp(domUtils.fillChar, 'g'), '');
     if(!ignoreBlank){
@@ -17666,8 +17666,8 @@ UE.plugins['video'] = function (){
                 var ext = url.substr(url.lastIndexOf('.') + 1);
                 if(ext == 'ogv') ext = 'ogg';
                 str = '<video' + (id ? ' id="' + id + '"' : '') + ' class="' + classname + ' video-js" ' + (align ? ' style="float:' + align + '"': '') +
-                    ' controls preload="none" width="' + width + '" height="' + height + '" src="' + url + '" data-setup="{}">' +
-                    '<source src="' + url + '" type="video/' + ext + '" /></video>';
+                    ' controls preload="meta" width="' + width + '" height="' + height + '" src="' + url + '" data-setup="{}">' +
+                    '<source src="' + url + '" type="video/' + ext + '" /></video><span style="display:none;">.</span><br/>';
                 break;
         }
         return str;
@@ -17766,8 +17766,8 @@ UE.plugins['video'] = function (){
             var html = [],id = 'tmpVedio', cl;
             for(var i=0,vi,len = videoObjs.length;i<len;i++){
                 vi = videoObjs[i];
-                cl = (type == 'upload' ? 'edui-upload-video video-js vjs-default-skin':'edui-faked-video');
-                html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, null, cl, 'image'));
+                cl = (type == 'upload' ? 'edui-upload-video video-js vjs-default-skin':'edui-faked');
+                html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, null, cl, 'video'));
             }
             me.execCommand("inserthtml",html.join(""),true);
             var rng = this.selection.getRange();

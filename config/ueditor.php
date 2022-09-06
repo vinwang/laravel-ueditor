@@ -90,7 +90,7 @@ return [
         "videoActionName" => "uploadvideo", /* 执行上传视频的action名称 */
         "videoFieldName" => "upfile", /* 提交的视频表单名称 */
         "videoPathFormat" => "storage/uploads/video/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
-        "videoUrlPrefix" => env('FILESYSTEM_DRIVER', 'local') == 'local' ? env('APP_URL') : 'https://'. env('alioss_domain'), /* 视频访问路径前缀 */
+        "videoUrlPrefix" => env('FILESYSTEM_DRIVER', 'local') == 'local' ? env('APP_URL') : 'https://'. env('alioss_domain').'/', /* 视频访问路径前缀 */
         "videoMaxSize" => 102400000, /* 上传大小限制，单位B，默认100MB */
         "videoAllowFiles" => [
             ".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg",

@@ -271,14 +271,21 @@
         var conUrl = convert_url(url);
 
         conUrl = utils.unhtmlForUrl(conUrl);
+        console.log(lang);
 
-        $G("preview").innerHTML = '<div class="previewMsg"><span>'+lang.urlError+'</span></div>'+
-        '<embed class="previewVideo" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
+        $G("preview").innerHTML = /*'<div class="previewMsg"><span>'+lang.urlError+'</span></div>'+*/
+        '<video width="420" height="auto" controls>'+
+            '<source src="'+ conUrl +'" type="video/mp4">'+
+            '<source src="'+ conUrl +'" type="video/ogg">'+
+            '<source src="'+ conUrl +'" type="video/webm">'+
+            '您的浏览器不支持 video 标签。'+
+        '</video>';
+        /*'<embed class="previewVideo" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
             ' src="' + conUrl + '"' +
             ' width="' + 420  + '"' +
             ' height="' + 280  + '"' +
             ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >' +
-        '</embed>';
+        '</embed>';*/
     }
 
 

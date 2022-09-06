@@ -31,21 +31,31 @@
         UEDITOR_HOME_URL: URL
 
         // 服务器统一请求接口路径
-        , serverUrl: URL + "admin/dash/ueditor"
+        , serverUrl: "/admin/ueditor"
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
+        // , toolbars: [[
+        //     'fullscreen', 'source', '|', 'undo', 'redo', '|',
+        //     'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+        //     'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+        //     'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+        //     'directionalityltr', 'directionalityrtl', 'indent', '|',
+        //     'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+        //     'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+        //     'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+        //     'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+        //     'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+        //     'print', 'preview', 'searchreplace', 'drafts', 'help'
+        // ]]
         , toolbars: [[
             'fullscreen', 'source', '|', 'undo', 'redo', '|',
             'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
             'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
             'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
-            'directionalityltr', 'directionalityrtl', 'indent', '|',
-            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
-            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-            'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
-            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
-            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
-            'print', 'preview', 'searchreplace', 'drafts', 'help'
+            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+            'link', 'unlink', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+            'simpleupload', 'insertimage', 'insertvideo', 'music', '|',
+            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols'
         ]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
@@ -353,13 +363,13 @@
 
         //默认过滤规则相关配置项目
         //,disabledTableInTable:true  //禁止表格嵌套
-        //,allowDivTransToP:true      //允许进入编辑器的div标签自动变成p标签
+        ,allowDivTransToP:false      //允许进入编辑器的div标签自动变成p标签
         //,rgb2Hex:true               //默认产出的数据中的color自动从rgb格式变成16进制格式
 
 		// xss 过滤是否开启,inserthtml等操作
 		,xssFilterRules: true
 		//input xss过滤
-		,inputXssFilter: true
+		,inputXssFilter: false
 		//output xss过滤
 		,outputXssFilter: true
 		// xss过滤白名单 名单来源: https://raw.githubusercontent.com/leizongmin/js-xss/master/lib/default.js
@@ -401,7 +411,7 @@
 			header: [],
 			hr:     [],
 			i:      ['class', 'style'],
-			img:    ['src', 'alt', 'title', 'width', 'height', 'id', '_src', 'loadingclass', 'class', 'data-latex'],
+			img:    ['src', 'alt', 'title', 'width', 'height', 'id', '_src', '_url', 'loadingclass', 'class', 'data-latex', 'style', 'url'],
 			ins:    ['datetime'],
 			li:     ['class', 'style'],
 			mark:   [],
@@ -426,7 +436,8 @@
 			tt:     [],
 			u:      [],
 			ul:     ['class', 'style'],
-			video:  ['autoplay', 'controls', 'loop', 'preload', 'src', 'height', 'width', 'class', 'style']
+			video:  ['autoplay', 'controls', 'loop', 'preload', 'src', 'height', 'width', 'class', 'style'],
+            source: ['src', 'type'],
 		}
     };
 
