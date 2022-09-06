@@ -1,5 +1,9 @@
 <?php
 namespace Wanglu\Ueditor;
+
+use OSS\OssClient;
+use OSS\Core\OssException;
+use Illuminate\Support\Facades\Log;
 /**
  * UEditor编辑器通用上传类
  */
@@ -118,6 +122,38 @@ class Uploader
             $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
         } else { //移动成功
             $this->stateInfo = $this->stateMap[0];
+            //阿里云
+            if(env('FILESYSTEM_DRIVER') == 'alioss'){
+                // $aliossDomain = env('alioss_domain');
+                $accessKeyId = env('alioss_accessKey');
+                $accessKeySecret = env('alioss_secretKey');
+                $endpoint = env('alioss_point');
+                $aliossBucket = env('alioss_bucket');
+                try {
+                    $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint, false);
+                    if(is_null($ossClient)){
+                        Log::channel('oss')->info('oss配置错误，请检查');
+                        return;
+                    }
+                    if(!$ossClient->doesBucketExist($aliossBucket)){
+
+						if(!$ossClient->createBucket($aliossBucket, OssClient::OSS_ACL_TYPE_PUBLIC_READ))  return;
+					}
+
+					if($ossClient->uploadFile($aliossBucket, $this->fullName, $this->filePath)){
+						// $alioss_domain = $aliossDomain ?: $aliossBucket .'.'.$endpoint;
+
+						// $this->fullName = 'https://'. $alioss_domain .'/'. $this->fullName;
+
+						@unlink($this->filePath);
+					}
+                } catch (OssException $e) {
+        
+                    Log::channel('oss')->info('creating OssClient instance: FAILED'.$e->getMessage());
+        
+                    return null;
+                }
+            } 
         }
     }
 
@@ -255,6 +291,8 @@ class Uploader
             $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
         } else { //移动成功
             $this->stateInfo = $this->stateMap[0];
+
+
         }
 
     }

@@ -7340,9 +7340,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             var me = this;
 
             me.fireEvent('beforesetcontent', html);
-            var root = UE.htmlparser(html);
-            me.filterInputRule(root);
-            html = root.toHtml();
+            // var root = UE.htmlparser(html);
+            // me.filterInputRule(root);
+            // html = root.toHtml();
 
             me.body.innerHTML = (isAppendTo ? me.body.innerHTML : '') + html;
 
@@ -9965,6 +9965,7 @@ var LocalStorage = UE.LocalStorage = (function () {
 ///plugin 编辑器默认的过滤转换机制
 
 UE.plugins['defaultfilter'] = function () {
+    return;
     var me = this;
     me.setOpt({
         'allowDivTransToP':true,
