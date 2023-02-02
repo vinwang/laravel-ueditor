@@ -7,5 +7,5 @@ laravel-ueditor
 
 # publish
 
-  php artisan publish
+  php artisan vendor:publish --provider "Wanglu\Ueditor\UeditorServiceProvider"
   
