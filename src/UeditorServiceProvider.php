@@ -25,7 +25,7 @@ class UeditorServiceProvider extends ServiceProvider{
 		]);
 		//公共资源
 		$this->publishes([
-			realpath(__DIR__ . '/../resources/public/') => public_path('ueditor')
+			realpath(__DIR__ . '/../resources/public/') => public_path('vendor/ueditor')
 		], 'public');
 		
 		\View::share('ueditorUrl', url('laravel-ueditor'));
